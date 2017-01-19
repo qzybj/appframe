@@ -10,6 +10,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/corelib" />
+            <option value="$PROJECT_DIR$/loadimagelib" />
+            <option value="$PROJECT_DIR$/netlib" />
+            <option value="$PROJECT_DIR$/paylib" />
+            <option value="$PROJECT_DIR$/platformsdklib" />
+            <option value="$PROJECT_DIR$/webviewlib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
