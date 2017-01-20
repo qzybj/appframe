@@ -23,4 +23,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile project(':loadimagelib')
     compile project(':netlib')
+
+    compile 'com.github.qzybj:CoreFrame:1.2'//Custom library
+    compile 'com.jakewharton:butterknife:8.4.0'
 }
