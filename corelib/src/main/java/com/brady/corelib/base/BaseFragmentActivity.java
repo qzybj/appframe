@@ -83,7 +83,7 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 	//------------- 标题栏修改实现 --------------
 
 	public void initTitleBar(View mainView) {
-		titleBar =  (TitleBarFragment)getSupportFragmentManager().findFragmentById(R.id.frame_fragment_title);
+		titleBar =  (TitleBarFragment)getSupportFragmentManager().findFragmentById(R.id.frame_fragment_titlebar);
 	}
 
 	/**标题栏   -  左边按钮触发事件*/
@@ -133,9 +133,9 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 	public final void showErrorDialog(final String positiveBtnMsg, final String errorInfo) {
 		if (mErrorDialog==null) {
 			mErrorDialog =new AlertDialog.Builder(this).create();
-			mErrorDialog.setTitle("提示");
+			mErrorDialog.setTitle(getString(R.string.prompt));
 			mErrorDialog.setMessage("请求数据错误");
-			mErrorDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			mErrorDialog.setButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialogInterface, int i) {
 					mErrorDialog.dismiss();
@@ -156,9 +156,9 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 		if (mExitDialog==null) {
 			mExitDialog = new AlertDialogFragment();
 		}
-		mExitDialog.setTitle("提示");
-		mExitDialog.setContent("确认退出应用？");
-		mExitDialog.setBtn("a","b");
+		mExitDialog.setTitle(getString(R.string.prompt))
+		.setContent(getString(R.string.prompt_exit))
+		.setBtn(getString(R.string.sure),getString(R.string.cancel));
 		showDialogFragment(mExitDialog);
 	}
 
@@ -263,9 +263,17 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 		JumpBaseUtils.goActivity(this, JumpUtils.getJumpBean(cls,title,args));
 	}
 
+	/**
+	 * 是否支持TitleBar
+	 * @return
+     */
 	protected boolean isSupportTitleBar(){
 		return titleBar !=null;
 	}
+	/**
+	 * 是否支持TabBar
+	 * @return
+	 */
 	protected boolean isSupportTabBar(){
 		getTabBar();
 		return tabBar !=null;

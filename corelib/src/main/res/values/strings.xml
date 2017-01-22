@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoreLib</string>
+    <string name="prompt">提示</string>
+    <string name="prompt_exit">确认退出应用？</string>
 </resources>

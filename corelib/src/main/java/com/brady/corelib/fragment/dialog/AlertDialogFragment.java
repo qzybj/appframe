@@ -83,15 +83,18 @@ public class AlertDialogFragment extends DialogFragment implements View.OnClickL
         dismiss();
     }
 
-    public void setTitle(String titleStr) {
+    public AlertDialogFragment setTitle(String titleStr) {
         title = StringUtils.isNotEmpty(titleStr)?titleStr:title;
+        return this;
     }
-    public void setContent(String contentStr) {
+    public AlertDialogFragment setContent(String contentStr) {
         content = StringUtils.isNotEmpty(contentStr)?contentStr:content;
+        return this;
     }
-    public void setBtn(String btnLeft,String btnRight) {
+    public AlertDialogFragment setBtn(String btnLeft,String btnRight) {
         btn1 = StringUtils.isNotEmpty(btnLeft)?btnLeft:btn1;
         btn2 = StringUtils.isNotEmpty(btnRight)?btnRight:btn2;
+        return this;
     }
 
     @Override

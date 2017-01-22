@@ -6,12 +6,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import com.brady.coreframe.utils.LogUtils;
 import com.brady.coreframe.utils.dataprocess.IntentUtils;
+import com.brady.coreframe.utils.dataprocess.ListUtils;
 import com.brady.corelib.CApplication;
 import com.brady.corelib.R;
 import com.brady.corelib.base.BaseFragmentActivity;
 import com.brady.corelib.fragment.bar.TabBarFragment;
 import com.brady.corelib.fragment.interfaces.IDialogCallBack;
-import com.brady.corelib.fragment.interfaces.IIntentData;
+import com.brady.corelib.fragment.interfaces.IBuildParams;
 import com.brady.corelib.fragment.interfaces.ISendData;
 import com.brady.corelib.fragment.interfaces.ITabBarClickListener;
 
@@ -22,9 +23,8 @@ import com.brady.corelib.fragment.interfaces.ITabBarClickListener;
  */
 public class ContainerActivity extends BaseFragmentActivity implements ISendData,ITabBarClickListener,IDialogCallBack {
     public static final String KEY_FRAGMENT = "fragment";
-    public static final String KEY_TABBAR = "tabbar";
-    public static final String KEY_TABBAR_LIST = "tabbar_list";
 
+    private IBuildParams mBuildParams;
     private Fragment mFragment;
     private Fragment oldFragment;
 
@@ -35,37 +35,40 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
 
     @Override
     public void initContentView(View view) {
-        initBar();
+        initUI();
     }
 
-    @Override
-    public void initData(Bundle savedInstanceState) {
-        try {
-            mFragment = Fragment.instantiate(CApplication.instance(), IntentUtils.getString(getIntent(), KEY_FRAGMENT));
-            showFragment(mFragment);
-        } catch (Exception e) {
-            LogUtils.e(e);
-        }
-    }
-
-    private void initBar() {
-        if(isSupportTitleBar()){
-            titleBar.setRightDrawable(R.mipmap.ic_launcher,0);
-            titleBar.setTitle("");
-        }
-        if(IntentUtils.getBoolean(getIntent(), KEY_TABBAR, false)){
-            if(isSupportTabBar()){
-                if(IntentUtils.isNotEmpty(getIntent())){
-                    Object obj = IntentUtils.getBundle(getIntent()).getSerializable(KEY_TABBAR_LIST);
-                    if(obj instanceof IIntentData){
-                        IIntentData intentData = (IIntentData)obj;
-                        tabBar.initTabView(intentData.getTabItems());
+    private void initUI() {
+        if(IntentUtils.isNotEmpty(getIntent())){
+            Object obj = IntentUtils.getBundle(getIntent()).getSerializable(KEY_FRAGMENT);
+            if(obj instanceof IBuildParams){
+                mBuildParams = (IBuildParams)obj;
+                if(isSupportTitleBar()&&mBuildParams.isEnableTitleBar()){
+                    //titleBar.setRightDrawable(R.mipmap.ic_launcher,0);
+                    //titleBar.setTitle("");
+                }else{
+                    setTitleBarVisible(false);
+                }
+                if(isSupportTabBar()
+                        &&mBuildParams.isEnableBottomTabBar()&& ListUtils.isNotEmptyList(mBuildParams.getTabItems())){
+                    tabBar.initTabView(mBuildParams.getTabItems());
+                }else{
+                    setTabBarVisible(false);
+                }
+                if(mBuildParams.getFragment()!=null){
+                    try {
+                        mFragment = Fragment.instantiate(CApplication.instance(), mBuildParams.getFragment().getSimpleName());
+                        showFragment(mFragment);
+                    } catch (Exception e) {
+                        LogUtils.e(e);
                     }
                 }
             }
-        }else{
-            setTabBarVisiable(false);
         }
+    }
+    @Override
+    public void initData(Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -103,7 +106,6 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
 
     private void showFragment(Fragment targetFragment){
         if (targetFragment!=null&&targetFragment!= oldFragment) {
-
             FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();//开启Fragment事务
             if(oldFragment !=null){
                 transaction.hide(oldFragment);
@@ -118,12 +120,26 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
         }
     }
 
-    private void setTabBarVisiable(boolean isShow){
+    private void setTitleBarVisible(boolean isShow){
+        if(isSupportTitleBar()){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启Fragment事务
+            if(isShow){
+                if (!titleBar.isAdded()) { // 隐藏当前的fragment，add下一个到Activity中
+                    transaction.add(R.id.frame_fragment_titlebar, titleBar);
+                }
+                transaction.show(titleBar);
+            }else{
+                transaction.hide(titleBar);
+            }
+            transaction.commit();
+        }
+    }
+    private void setTabBarVisible(boolean isShow){
         if(isSupportTabBar()){
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启Fragment事务
             if(isShow){
                 if (!tabBar.isAdded()) { // 隐藏当前的fragment，add下一个到Activity中
-                    transaction.add(R.id.frame_fragment_content, tabBar);
+                    transaction.add(R.id.frame_fragment_tabbar, tabBar);
                 }
                 transaction.show(tabBar);
             }else{

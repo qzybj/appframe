@@ -6,6 +6,8 @@ import com.brady.appframe.core.ui.reciverui.bean.MainItemBean;
 import com.brady.coreframe.utils.dataprocess.IntentUtils;
 import com.brady.coreframe.utils.dataprocess.RandomUtils;
 import com.brady.coreframe.utils.jump.JumpBaseUtils;
+import com.brady.corelib.fragment.interfaces.IBuildParams;
+import com.brady.corelib.reciverui.ui.ContainerActivity;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,9 +53,19 @@ public class TestDataBuilder {
         Bundle args = IntentUtils.setBString(null, KEY_FRAGMENT, fragment.getName());
         return buildJumpBean(new JumpUtils.JumpInfo(cls,describe,args));
     }
+
     public static MainItemBean getJumpBeanF(Class cls, String describe, Class fragment,Bundle args) {
         args = IntentUtils.setBString(args, KEY_FRAGMENT, fragment.getName());
         return buildJumpBean(new JumpUtils.JumpInfo(cls,describe,args));
+    }
+
+    public static MainItemBean getJumpBeanF(IBuildParams buildParams) {
+        if(buildParams!=null){
+            Bundle args = new Bundle();
+            args.putSerializable(ContainerActivity.KEY_FRAGMENT,buildParams);
+            return buildJumpBean(new JumpUtils.JumpInfo(ContainerActivity.class,buildParams.getFragment().getName(),args));
+        }
+        return null;
     }
 
     /**以指定Activity展示的界面*/

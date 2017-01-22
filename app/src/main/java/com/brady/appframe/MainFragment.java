@@ -15,8 +15,9 @@ import com.brady.appframe.module.webview.PullWebviewActivity;
 import com.brady.appframe.module.webview.SwipeWebviewActivity;
 import com.brady.coreframe.ui.base.FrameBaseFragment;
 import com.brady.coreframe.utils.jump.JumpBaseUtils;
-import com.brady.corelib.fragment.interfaces.IIntentData;
+import com.brady.corelib.fragment.interfaces.IBuildParams;
 import com.brady.corelib.fragment.interfaces.ITabItem;
+import com.brady.corelib.fragment.interfaces.impl.BuildParams;
 import com.brady.corelib.reciverui.ui.ContainerActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
@@ -121,15 +122,7 @@ public class MainFragment extends FrameBaseFragment implements SwipeRefreshLayou
         list.add(TestDataBuilder.getJumpBean("LiveAnimation - 测试View动画",PullWebviewActivity.class,null));
         list.add(TestDataBuilder.getJumpBean("SwipeBackHelper - 滑动返回",SwipeWebviewActivity.class,null));
 
-        Bundle args = new Bundle();
-        args.putBoolean(ContainerActivity.KEY_TABBAR,true);
-        args.putSerializable(ContainerActivity.KEY_TABBAR_LIST, new IIntentData() {
-            @Override
-            public ArrayList<ITabItem> getTabItems() {
-                return TabBottomBarUtils.getTestTabItemList();
-            }
-        });
-        list.add(TestDataBuilder.getJumpBeanF(ContainerActivity.class,"SimpleFragment",SimpleFragment.class,args));
+        list.add(TestDataBuilder.getJumpBeanF(new BuildParams(SimpleFragment.class,true,true,TabBottomBarUtils.getTestTabItemList())));
         return list;
     }
 }
