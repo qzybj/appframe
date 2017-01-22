@@ -9,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import com.brady.appframe.R;
-import com.brady.corelib.fragment.interfaces.ISendData;
+import com.brady.corelib.fragment.interfaces.IBindFragment2Container;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -41,8 +42,8 @@ public class LoginDialogFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                if (getActivity() instanceof ISendData) {
-                                    ISendData listener = (ISendData) getActivity();
+                                if (getActivity() instanceof IBindFragment2Container) {
+                                    IBindFragment2Container listener = (IBindFragment2Container) getActivity();
                                     Object userBean =null;
 //                                   userBean = new LoginBean();
 //                                    bean.setUserName(TextViewUtils.getTextViewValue(tv_userName));

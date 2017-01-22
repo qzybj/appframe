@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.brady.appframe.R;
 import com.brady.coreframe.utils.view.TextViewUtils;
-import com.brady.corelib.fragment.interfaces.ISendData;
+import com.brady.corelib.fragment.interfaces.IBindFragment2Container;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,8 +37,8 @@ public class InputDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_surename)
     public void onClick() {
-        if (getActivity() instanceof ISendData) {
-            ISendData listener = (ISendData) getActivity();
+        if (getActivity() instanceof IBindFragment2Container) {
+            IBindFragment2Container listener = (IBindFragment2Container) getActivity();
             listener.receive(getTag(),TextViewUtils.getTextViewValue(et_name));
             dismiss();
         }

@@ -87,11 +87,12 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 	}
 
 	/**标题栏   -  左边按钮触发事件*/
-	public void onClickTitleLeft(View v) {
+	public boolean onClickTitleLeft(View v) {
 		finish();
+		return true;
 	}
 	/**标题栏   -  右边按钮触发事件*/
-	public void onClickTitleRight(View v) {	}
+	public boolean onClickTitleRight(View v) {	return true;}
 
 	/**
 	 * 点击事件处理<BR>
@@ -115,7 +116,7 @@ public abstract class BaseFragmentActivity extends FrameBaseActivity implements 
 		if(mProgress != null){
 			mProgress.dismiss();
 		}
-	};
+	}
 
 	public final void showErrorDialog(int errorId) {
 		showErrorDialog(getString(errorId));

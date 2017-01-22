@@ -11,5 +11,5 @@ public interface ITabBarClickListener {
      * 底部Tab栏的点击事件监听回调
      * @param view
      */
-    void onTabClick(View view);
+    boolean onTabClick(View view);
 }

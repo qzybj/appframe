@@ -10,23 +10,27 @@ import com.brady.coreframe.utils.dataprocess.ListUtils;
 import com.brady.corelib.CApplication;
 import com.brady.corelib.R;
 import com.brady.corelib.base.BaseFragmentActivity;
-import com.brady.corelib.fragment.bar.TabBarFragment;
+import com.brady.corelib.fragment.bar.TitleBarFragment;
+import com.brady.corelib.fragment.interfaces.IBindFragment2Container;
 import com.brady.corelib.fragment.interfaces.IDialogCallBack;
 import com.brady.corelib.fragment.interfaces.IBuildParams;
-import com.brady.corelib.fragment.interfaces.ISendData;
 import com.brady.corelib.fragment.interfaces.ITabBarClickListener;
+import com.brady.corelib.fragment.interfaces.ITitleBarClickListener;
 
 
 /**
  *  用于接收Fragment的容器Activity:<br>
  *  包含标题栏 、底部动态栏
  */
-public class ContainerActivity extends BaseFragmentActivity implements ISendData,ITabBarClickListener,IDialogCallBack {
+public class ContainerActivity extends BaseFragmentActivity implements IBindFragment2Container,ITabBarClickListener,IDialogCallBack {
     public static final String KEY_FRAGMENT = "fragment";
 
     private IBuildParams mBuildParams;
     private Fragment mFragment;
     private Fragment oldFragment;
+
+    private ITitleBarClickListener mTitleBarClickListener;
+    private ITabBarClickListener mTabBarClickListener;
 
     @Override
     public int getLayoutResId() {
@@ -57,7 +61,7 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
                 }
                 if(mBuildParams.getFragment()!=null){
                     try {
-                        mFragment = Fragment.instantiate(CApplication.instance(), mBuildParams.getFragment().getSimpleName());
+                        mFragment = Fragment.instantiate(CApplication.instance(), mBuildParams.getFragment().getName());
                         showFragment(mFragment);
                     } catch (Exception e) {
                         LogUtils.e(e);
@@ -77,31 +81,55 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
     }
 
     /**标题栏   -  左边按钮触发事件*/
-    public void onClickTitleLeft(View v) {
+    public boolean onClickTitleLeft(View v) {
+        if(mTitleBarClickListener!=null){
+            boolean isConsume = mTitleBarClickListener.onClickTitleLeft(v);
+            if(isConsume){
+                return isConsume;
+            }
+        }
         finish();
+        return true;
     }
 
     /**标题栏   -  右边按钮触发事件*/
-    public void onClickTitleRight(View v) {
-        showToast("ibtn_right");
+    public boolean onClickTitleRight(View v) {
+        if(mTitleBarClickListener!=null){
+            boolean isConsume = mTitleBarClickListener.onClickTitleRight(v);
+            if(isConsume){
+                return isConsume;
+            }
+        }
+        return true;
     }
 
     @Override
-    public void onTitleBarClick(View view) {
-        switch (view.getId()) {
+    public boolean onTitleBarClick(View v) {
+        if(mTitleBarClickListener!=null){
+            boolean isConsume = mTitleBarClickListener.onTitleBarClick(v);
+            if(isConsume){
+                return isConsume;
+            }
+        }
+        switch (v.getId()) {
             default:
                 break;
         }
+        return true;
     }
 
-    public void onTabClick(View view) {
-        switch (view.getId()) {
-            case TabBarFragment.ID_TAB_BASECODE:
-                if(mFragment !=null){
-                    showFragment(mFragment);
-                }
+    public boolean onTabClick(View v) {
+        if(mTabBarClickListener!=null){
+            boolean isConsume = mTabBarClickListener.onTabClick(v);
+            if(isConsume){
+                return isConsume;
+            }
+        }
+        switch (v.getId()) {
+            default:
                 break;
         }
+        return true;
     }
 
     private void showFragment(Fragment targetFragment){
@@ -149,14 +177,6 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
         }
     }
 
-    @Override
-    public void receive(String tag, Object obj) {
-        if(obj instanceof String){
-            showToast(obj.toString());
-        }else{
-            showToast(obj.toString());
-        }
-    }
 
     @Override
     public void btnCallBack(String tag, int type) {
@@ -169,5 +189,25 @@ public class ContainerActivity extends BaseFragmentActivity implements ISendData
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void bindListener(ITitleBarClickListener titleBarListener, ITabBarClickListener tabBarClickListener) {
+        this.mTitleBarClickListener =titleBarListener;
+        this.mTabBarClickListener =tabBarClickListener;
+    }
+    @Override
+    public void receive(String tag, Object obj) {
+        if(obj instanceof String){
+            showToast(obj.toString());
+        }else{
+            showToast(obj.toString());
+        }
+    }
+
+    @Override
+    public TitleBarFragment getTitleBar() {
+        return titleBar;
     }
 }
