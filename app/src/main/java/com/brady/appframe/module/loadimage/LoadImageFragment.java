@@ -1,13 +1,12 @@
-package com.brady.appframe.module.common.ui;
+package com.brady.appframe.module.loadimage;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 import com.brady.appframe.R;
-import com.brady.appframe.core.ui.fragment.dialog.InputDialogFragment;
-import com.brady.appframe.core.ui.fragment.dialog.LoginDialogFragment;
+import com.brady.appframe.module.common.utils.TestDataBuilder;
+import com.brady.coreframe.module.loadimage.LoadImageManager;
 import com.brady.corelib.base.BaseFragment;
 import com.brady.corelib.fragment.bar.TabBarFragment;
 import com.brady.corelib.fragment.bar.TitleBarFragment;
@@ -19,28 +18,27 @@ import butterknife.OnClick;
 
 
 /**
- * Created by ZhangYuanBo on 2016/5/27.
+ * Created by ZhangYuanBo on 2017/1/23.
  */
-public class SimpleFragment extends BaseFragment implements ITabBarClickListener, ITitleBarClickListener {
 
-    @BindView(R.id.tv_fragment_content)
-    TextView tv_content;
-    @BindView(R.id.btn_inputdialog)
-    Button btn_inputdialog;
-    @BindView(R.id.btn_logindialog)
-    Button btn_logindialog;
+public class LoadImageFragment extends BaseFragment implements ITabBarClickListener, ITitleBarClickListener {
+
+    @BindView(R.id.iv_image)
+    ImageView iv_image;
+    @BindView(R.id.btn_randomImage)
+    Button btn_randomImage;
 
 
     private IBindFragment2Container mBindFragment2Container;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_simple;
+        return R.layout.fragment_loadimage;
     }
 
     @Override
     public void initContentView(View view) {
-        tv_content.setText("this is " + this.getClass().getName());
+
     }
 
     @Override
@@ -49,25 +47,19 @@ public class SimpleFragment extends BaseFragment implements ITabBarClickListener
 
     }
 
-    @OnClick({R.id.btn_inputdialog, R.id.btn_logindialog})
+    @OnClick({R.id.btn_randomImage})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_inputdialog:
-                InputDialogFragment inputDialogFragment = new InputDialogFragment();
-                showFragment(inputDialogFragment);
-                break;
-            case R.id.btn_logindialog:
-                LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
-                showFragment(loginDialogFragment);
+            case R.id.btn_randomImage:
+                randomImage();
                 break;
         }
     }
 
-    private void showFragment(DialogFragment targetFragment){
-        if(getActivity()!=null&&!getActivity().isFinishing()&&targetFragment!=null){
-            targetFragment.show(getFragmentManager(), "loginDialog");
-        }
+    private void randomImage() {
+        LoadImageManager.instance().loadImage(iv_image,TestDataBuilder.getImageUrl());
     }
+
 
     private void initBind() {
         if(getBaseActivity() instanceof IBindFragment2Container){

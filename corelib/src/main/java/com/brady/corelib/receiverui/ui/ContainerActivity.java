@@ -1,4 +1,4 @@
-package com.brady.corelib.reciverui.ui;
+package com.brady.corelib.receiverui.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -202,7 +202,7 @@ public class ContainerActivity extends BaseFragmentActivity implements IBindFrag
         if(obj instanceof String){
             showToast(obj.toString());
         }else{
-            showToast(obj.toString());
+            showToast("Send null");
         }
     }
 

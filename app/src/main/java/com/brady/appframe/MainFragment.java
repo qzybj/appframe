@@ -11,14 +11,12 @@ import com.brady.appframe.core.ui.reciverui.bean.MainItemBean;
 import com.brady.appframe.module.common.ui.SimpleFragment;
 import com.brady.appframe.module.common.utils.TabBottomBarUtils;
 import com.brady.appframe.module.common.utils.TestDataBuilder;
+import com.brady.appframe.module.loadimage.LoadImageFragment;
 import com.brady.appframe.module.webview.PullWebviewActivity;
 import com.brady.appframe.module.webview.SwipeWebviewActivity;
 import com.brady.coreframe.ui.base.FrameBaseFragment;
 import com.brady.coreframe.utils.jump.JumpBaseUtils;
-import com.brady.corelib.fragment.interfaces.IBuildParams;
-import com.brady.corelib.fragment.interfaces.ITabItem;
 import com.brady.corelib.fragment.interfaces.impl.BuildParams;
-import com.brady.corelib.reciverui.ui.ContainerActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import java.text.DateFormat;
@@ -119,10 +117,11 @@ public class MainFragment extends FrameBaseFragment implements SwipeRefreshLayou
 
     public static ArrayList<MainItemBean> getShowBeanList() {
         ArrayList<MainItemBean> list = new ArrayList<>();
-        list.add(TestDataBuilder.getJumpBean("LiveAnimation - 测试View动画",PullWebviewActivity.class,null));
-        list.add(TestDataBuilder.getJumpBean("SwipeBackHelper - 滑动返回",SwipeWebviewActivity.class,null));
+        list.add(TestDataBuilder.getJumpBean("WebView - 样式1",PullWebviewActivity.class,null));
+        list.add(TestDataBuilder.getJumpBean("WebView - 样式1",SwipeWebviewActivity.class,null));
 
         list.add(TestDataBuilder.getJumpBeanF(new BuildParams(SimpleFragment.class,true,true,TabBottomBarUtils.getTestTabItemList())));
+        list.add(TestDataBuilder.getJumpBeanF(new BuildParams(LoadImageFragment.class,true,true,TabBottomBarUtils.getTestTabItemList())));
         return list;
     }
 }

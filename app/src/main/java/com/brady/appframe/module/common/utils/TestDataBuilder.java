@@ -7,7 +7,7 @@ import com.brady.coreframe.utils.dataprocess.IntentUtils;
 import com.brady.coreframe.utils.dataprocess.RandomUtils;
 import com.brady.coreframe.utils.jump.JumpBaseUtils;
 import com.brady.corelib.fragment.interfaces.IBuildParams;
-import com.brady.corelib.reciverui.ui.ContainerActivity;
+import com.brady.corelib.receiverui.ui.ContainerActivity;
 import java.util.ArrayList;
 import java.util.Date;
 

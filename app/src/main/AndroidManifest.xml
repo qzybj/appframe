@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".module.webview.SwipeWebviewActivity"/>
         <activity android:name=".module.webview.PullWebviewActivity"/>
-        <activity android:name="com.brady.corelib.reciverui.ui.ContainerActivity"
+        <activity android:name="com.brady.corelib.receiverui.ui.ContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden"
             android:screenOrientation="portrait"
