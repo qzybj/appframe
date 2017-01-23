@@ -5,14 +5,15 @@ package com.brady.corelib.fragment.interfaces;
  *  用于DialogFragment与activity的数据
  */
 public interface IDialogCallBack {
-    /**RequestCode 基本值*/
-    int CODE_BTN_LEFT = 11001;
-    int CODE_BTN_RIGHT = 11002;
+    /**用于判断的基本值*/
+    int CODE_COMMON = 11000;
+    int CODE_BTN_LEFT = CODE_COMMON+1;
+    int CODE_BTN_RIGHT = CODE_COMMON+2;
 
     /**
      * 接收Fragment发送的数据
-     * @param tag Fragment tag
+     * @param fragmentTag Fragment tag
      * @param type
      */
-    void btnCallBack(String tag, int type);
+    boolean callBack(String fragmentTag, int type,Object data);
 }

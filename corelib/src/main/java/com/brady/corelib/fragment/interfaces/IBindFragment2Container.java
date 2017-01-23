@@ -15,6 +15,12 @@ public interface IBindFragment2Container {
     void bindListener(ITitleBarClickListener titleBarListener,ITabBarClickListener tabBarClickListener);
 
     /**
+     * 用于绑定弹出类Fragment的callback事件
+     * @param callBack
+     */
+    void bindFragmentCallBack(IDialogCallBack callBack);
+
+    /**
      * 接收Fragment发送的数据
      * @param tag Fragment tag
      * @param obj

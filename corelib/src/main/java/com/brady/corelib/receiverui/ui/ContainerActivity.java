@@ -16,6 +16,10 @@ import com.brady.corelib.fragment.interfaces.IDialogCallBack;
 import com.brady.corelib.fragment.interfaces.IBuildParams;
 import com.brady.corelib.fragment.interfaces.ITabBarClickListener;
 import com.brady.corelib.fragment.interfaces.ITitleBarClickListener;
+import com.brady.corelib.utils.FragmentHelper;
+
+import static android.R.attr.data;
+import static android.R.attr.tag;
 
 
 /**
@@ -31,6 +35,7 @@ public class ContainerActivity extends BaseFragmentActivity implements IBindFrag
 
     private ITitleBarClickListener mTitleBarClickListener;
     private ITabBarClickListener mTabBarClickListener;
+    private IDialogCallBack mDialogCallBack;
 
     @Override
     public int getLayoutResId() {
@@ -134,69 +139,48 @@ public class ContainerActivity extends BaseFragmentActivity implements IBindFrag
 
     private void showFragment(Fragment targetFragment){
         if (targetFragment!=null&&targetFragment!= oldFragment) {
-            FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();//开启Fragment事务
-            if(oldFragment !=null){
-                transaction.hide(oldFragment);
-            }
-            if (!targetFragment.isAdded()) {
-                transaction.add(R.id.frame_fragment_content, targetFragment);
-            } else {
-                transaction.show(targetFragment);
-            }
+            FragmentHelper.showFragment(getSupportFragmentManager(),R.id.frame_fragment_content,oldFragment,targetFragment);
             oldFragment = targetFragment;
-            transaction.commit();
         }
     }
 
     private void setTitleBarVisible(boolean isShow){
         if(isSupportTitleBar()){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启Fragment事务
-            if(isShow){
-                if (!titleBar.isAdded()) { // 隐藏当前的fragment，add下一个到Activity中
-                    transaction.add(R.id.frame_fragment_titlebar, titleBar);
-                }
-                transaction.show(titleBar);
-            }else{
-                transaction.hide(titleBar);
-            }
-            transaction.commit();
+            FragmentHelper.setFragmentVisible(getSupportFragmentManager(),R.id.frame_fragment_titlebar,titleBar,isShow);
         }
     }
     private void setTabBarVisible(boolean isShow){
         if(isSupportTabBar()){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启Fragment事务
-            if(isShow){
-                if (!tabBar.isAdded()) { // 隐藏当前的fragment，add下一个到Activity中
-                    transaction.add(R.id.frame_fragment_tabbar, tabBar);
-                }
-                transaction.show(tabBar);
-            }else{
-                transaction.hide(tabBar);
-            }
-            transaction.commit();
+            FragmentHelper.setFragmentVisible(getSupportFragmentManager(),R.id.frame_fragment_tabbar,tabBar,isShow);
         }
     }
 
 
     @Override
-    public void btnCallBack(String tag, int type) {
+    public boolean callBack(String fragmentTag, int type,Object data) {
+        if(mDialogCallBack!=null){
+            boolean isConsume = mDialogCallBack.callBack(fragmentTag,type,data);
+            if(isConsume){
+                return isConsume;
+            }
+        }
         switch (type){
-            case IDialogCallBack.CODE_BTN_LEFT:
-                if("AlertDialogFragment".equals(tag)){
-                    showToast("CODE_BTN_LEFT");
-                }
-                break;
             default:
                 break;
         }
+        return false;
     }
-
 
     @Override
     public void bindListener(ITitleBarClickListener titleBarListener, ITabBarClickListener tabBarClickListener) {
         this.mTitleBarClickListener =titleBarListener;
         this.mTabBarClickListener =tabBarClickListener;
     }
+
+    public void bindFragmentCallBack(IDialogCallBack callBack) {
+        this.mDialogCallBack =callBack;
+    }
+
     @Override
     public void receive(String tag, Object obj) {
         if(obj instanceof String){

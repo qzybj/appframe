@@ -70,13 +70,13 @@ public class AlertDialogFragment extends DialogFragment implements View.OnClickL
             IDialogCallBack listener = (IDialogCallBack) getActivity();
             switch (view.getId()) {
                 case android.R.id.button1:
-                    listener.btnCallBack(getTag(), IDialogCallBack.CODE_BTN_LEFT);
+                    listener.callBack(getTag(), IDialogCallBack.CODE_BTN_LEFT);
                     break;
                 case android.R.id.button2:
-                    listener.btnCallBack(getTag(),IDialogCallBack.CODE_BTN_RIGHT);
+                    listener.callBack(getTag(),IDialogCallBack.CODE_BTN_RIGHT);
                     break;
                 default:
-                    listener.btnCallBack(getTag(),view.getId());
+                    listener.callBack(getTag(),view.getId());
                     break;
             }
         }
