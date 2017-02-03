@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import com.brady.appframe.R;
 import com.brady.corelib.fragment.interfaces.IBindFragment2Container;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

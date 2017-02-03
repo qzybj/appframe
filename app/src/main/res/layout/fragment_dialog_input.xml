@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_surename"
+        android:id="@+id/btn_ok"
         style="@style/style_common"
         android:layout_below="@id/layout_input"
         android:layout_centerHorizontal="true"

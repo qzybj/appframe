@@ -15,16 +15,21 @@ import com.brady.corelib.R;
 import com.brady.corelib.fragment.interfaces.IDialogCallBack;
 
 
+
 /**
  * Created by ZhangYuanBo on 2016/5/27.<br/>
  * 弹出提示框
  */
 public class AlertDialogFragment extends DialogFragment implements View.OnClickListener{
+    private final String KEY_TITLE= "tv_title";
+    private final String KEY_CONTENT= "tv_content";
+    private final String KEY_BTN_OK= "btn_ok";
+    private final String KEY_BTN_CANCEL= "btn_cancel";
 
-    TextView tv_title;
-    TextView tv_content;
-    Button btn_ok;
-    Button btn_cancel;
+    private TextView tv_title;
+    private TextView tv_content;
+    private Button btn_ok;
+    private Button btn_cancel;
     private String title;
     private String content;
     private String btn1;
@@ -52,10 +57,10 @@ public class AlertDialogFragment extends DialogFragment implements View.OnClickL
 
     private void initViewUI(Bundle savedInstanceState) {
         if(savedInstanceState != null){
-            TextViewUtils.setTextViewValue(tv_title,savedInstanceState.getString("tv_title"));
-            TextViewUtils.setTextViewValue(tv_content,savedInstanceState.getString("tv_content"));
-            TextViewUtils.setTextViewValue(btn_ok,savedInstanceState.getString("btn_ok"));
-            TextViewUtils.setTextViewValue(btn_cancel,savedInstanceState.getString("btn_cancel"));
+            TextViewUtils.setTextViewValue(tv_title,savedInstanceState.getString(KEY_TITLE));
+            TextViewUtils.setTextViewValue(tv_content,savedInstanceState.getString(KEY_CONTENT));
+            TextViewUtils.setTextViewValue(btn_ok,savedInstanceState.getString(KEY_BTN_OK));
+            TextViewUtils.setTextViewValue(btn_cancel,savedInstanceState.getString(KEY_BTN_CANCEL));
         }else{
             TextViewUtils.setTextViewValue(tv_title,title);
             TextViewUtils.setTextViewValue(tv_content,content);
@@ -70,13 +75,13 @@ public class AlertDialogFragment extends DialogFragment implements View.OnClickL
             IDialogCallBack listener = (IDialogCallBack) getActivity();
             switch (view.getId()) {
                 case android.R.id.button1:
-                    listener.callBack(getTag(), IDialogCallBack.CODE_BTN_LEFT);
+                    listener.callBack(getTag(), IDialogCallBack.CODE_BTN_LEFT,null);
                     break;
                 case android.R.id.button2:
-                    listener.callBack(getTag(),IDialogCallBack.CODE_BTN_RIGHT);
+                    listener.callBack(getTag(),IDialogCallBack.CODE_BTN_RIGHT,null);
                     break;
                 default:
-                    listener.callBack(getTag(),view.getId());
+                    listener.callBack(getTag(),view.getId(),null);
                     break;
             }
         }
@@ -100,10 +105,10 @@ public class AlertDialogFragment extends DialogFragment implements View.OnClickL
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if(outState!=null){
-            outState.putCharSequence("tv_title",TextViewUtils.getTextViewValue(tv_title));
-            outState.putCharSequence("tv_content",TextViewUtils.getTextViewValue(tv_content));
-            outState.putCharSequence("btn_ok",TextViewUtils.getTextViewValue(btn_ok));
-            outState.putCharSequence("btn_cancel",TextViewUtils.getTextViewValue(btn_cancel));
+            outState.putCharSequence(KEY_TITLE,TextViewUtils.getTextViewValue(tv_title));
+            outState.putCharSequence(KEY_CONTENT,TextViewUtils.getTextViewValue(tv_content));
+            outState.putCharSequence(KEY_BTN_OK,TextViewUtils.getTextViewValue(btn_ok));
+            outState.putCharSequence(KEY_BTN_CANCEL,TextViewUtils.getTextViewValue(btn_cancel));
         }
         super.onSaveInstanceState(outState);
     }

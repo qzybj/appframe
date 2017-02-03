@@ -2,7 +2,6 @@ package com.brady.corelib.receiverui.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import com.brady.coreframe.utils.LogUtils;
 import com.brady.coreframe.utils.dataprocess.IntentUtils;
@@ -17,9 +16,6 @@ import com.brady.corelib.fragment.interfaces.IBuildParams;
 import com.brady.corelib.fragment.interfaces.ITabBarClickListener;
 import com.brady.corelib.fragment.interfaces.ITitleBarClickListener;
 import com.brady.corelib.utils.FragmentHelper;
-
-import static android.R.attr.data;
-import static android.R.attr.tag;
 
 
 /**

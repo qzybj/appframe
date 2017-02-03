@@ -11,7 +11,6 @@ import android.widget.EditText;
 import com.brady.appframe.R;
 import com.brady.coreframe.utils.view.TextViewUtils;
 import com.brady.corelib.fragment.interfaces.IBindFragment2Container;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,8 +23,8 @@ public class InputDialogFragment extends DialogFragment {
 
     @BindView(R.id.et_name)
     EditText et_name;
-    @BindView(R.id.btn_surename)
-    Button btn_surename;
+    @BindView(R.id.btn_ok)
+    Button btn_ok;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class InputDialogFragment extends DialogFragment {
         return view;
     }
 
-    @OnClick(R.id.btn_surename)
+    @OnClick(R.id.btn_ok)
     public void onClick() {
         if (getActivity() instanceof IBindFragment2Container) {
             IBindFragment2Container listener = (IBindFragment2Container) getActivity();
